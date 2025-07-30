@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Romantic Envelope</title>
+  <style>
+    /* Full‑screen flex centering with romantic gradient */
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+      overflow: hidden;
+    }
+
+    /* Envelope container */
+    .envelope {
+      width: 270px;
+      height: 170px;
+      position: relative;
+      background-color: #fed4d6;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(234, 69, 69, 0.5);
+      perspective: 800px;
+    }
+    .envelope.fold .top {
+      transform: rotateX(180deg);
+      transition-delay: 0.6s;
+      z-index: 6;
+    }
+    .envelope.fold .back {
+      top: 0;
+      z-index: 3;
+      transition-delay: 0.3s;
+    }
+
+    /* Flap pieces */
+    .top, .bottom {
+      width: 0; height: 0;
+      position: relative;
+      border-left: 135px solid transparent;
+      border-right: 135px solid transparent;
+      transition: all 0.8s ease;
+      transform-origin: bottom;
+    }
+    .top {
+      border-bottom: 120px solid #f75555;
+      top: -120px;
+      z-index: 3;
+    }
+    .bottom {
+      border-bottom: 120px solid #d81616;
+      top: -70px;
+      z-index: 4;
+    }
+
+    /* Side panels */
+    .left, .right {
+      position: absolute;
+      top: 0; height: 0;
+      border-top: 85px solid transparent;
+      border-bottom: 85px solid transparent;
+      z-index: 4;
+    }
+    .left { left: 0; border-left: 135px solid #fe1919; }
+    .right { right: 0; border-right: 135px solid #fe1919; }
+
+    /* Back panel (holds the letter) */
+    .back {
+      width: 100%; height: 100%;
+      position: absolute; top: -50%;
+      transition: all 1s ease;
+      transition-delay: 0.4s;
+      z-index: 3;
+      transform-style: preserve-3d;
+      overflow: hidden;
+    }
+
+    /* Noise texture for paper */
+    :root {
+      --paper-noise: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1' /%3E%3C/svg%3E");
+    }
+
+    /* Letter container */
+    .letter {
+      position: absolute;
+      left: 50%; top: 20%;
+      transform: translateX(-50%) scale(1);
+      width: 75%; height: 60%;
+      background-color: #fdf8e4;
+      background-image: var(--paper-noise);
+      background-repeat: repeat;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.05), 0 4px 6px rgba(0,0,0,0.1);
+      border-radius: 0.375rem;
+      padding: 1rem;
+      font-family: 'Lucida Handwriting', 'Brush Script MT', cursive;
+      font-size: 1rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      z-index: 2;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Preview vs Full text */
+    .letter .preview { display: block; }
+    .letter .full    { display: none; }
+    .letter.zoom .preview { display: none; }
+    .letter.zoom .full {
+      display: block;
+      overflow: auto;
+      text-align: left;
+      /* hide scrollbar but still allow scrolling */
+      scrollbar-width: none;       /* Firefox */
+      -ms-overflow-style: none;    /* IE 10+ */
+    }
+    .letter.zoom .full::-webkit-scrollbar {
+      display: none;               /* Safari/WebKit */
+    }
+
+    /* Full‑letter styling: cursive + enhanced paper texture */
+    .letter.zoom .full {
+      font-family: 'Lucida Handwriting', 'Brush Script MT', cursive;
+      font-size: 1.25rem;
+      line-height: 1.6;
+      color: #3e2723;
+      background-color: #fef5e4;
+      background-image:
+        var(--paper-noise),
+        linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px);
+      background-size: 200px 200px, 20px 20px, 20px 20px;
+      padding: 2rem;
+      border-radius: 0.5rem;
+    }
+
+    /* Zoomed letter on top */
+    .letter.zoom {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      width: 80%;
+      height: auto;
+      max-height: 90%;
+      padding: 0;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      background: none;
+      z-index: 9999;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="envelope fold">
+    <div class="top"></div>
+    <div class="left"></div>
+    <div class="back">
+      <div class="letter">
+        <div class="preview">
+          A special note awaits… ✉️
+        </div>
+        <div class="full">
+          <h2>My Dearest,</h2>
+          <p>
+            I hope this letter finds you in the brightest of spirits.
+            Words cannot express how much joy you bring into my life every day.
+            From our morning coffees to our starlit conversations,
+            every moment with you is a treasure.
+             I hope this letter finds you in the brightest of spirits.
+            Words cannot express how much joy you bring into my life every day.
+            From our morning coffees to our starlit conversations,
+            every moment with you is a treasure.
+             I hope this letter finds you in the brightest of spirits.
+            Words cannot express how much joy you bring into my life every day.
+            From our morning coffees to our starlit conversations,
+            every moment with you is a treasure.
+             I hope this letter finds you in the brightest of spirits.
+            Words cannot express how much joy you bring into my life every day.
+            From our morning coffees to our starlit conversations,
+            every moment with you is a treasure.
+             I hope this letter finds you in the brightest of spirits.
+            Words cannot express how much joy you bring into my life every day.
+            From our morning coffees to our starlit conversations,
+            every moment with you is a treasure.
+             I hope this letter finds you in the brightest of spirits.
+            Words cannot express how much joy you bring into my life every day.
+            From our morning coffees to our starlit conversations,
+            every moment with you is a treasure.
+             I hope this letter finds you in the brightest of spirits.
+            Words cannot express how much joy you bring into my life every day.
+            From our morning coffees to our starlit conversations,
+            every moment with you is a treasure.
+             I hope this letter finds you in the brightest of spirits.
+            Words cannot express how much joy you bring into my life every day.
+            From our morning coffees to our starlit conversations,
+            every moment with you is a treasure.
+          </p>
+          <p>
+            Forever yours,<br>
+            [Your Name]
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="right"></div>
+    <div class="bottom"></div>
+  </div>
+
+  <script>
+    const envelope    = document.querySelector('.envelope');
+    const back        = document.querySelector('.back');
+    const letter      = document.querySelector('.letter');
+    const placeholder = document.createComment('letter-placeholder');
+    let isZoomed      = false;
+
+    // Open envelope once
+    envelope.addEventListener('click', e => {
+      if (envelope.classList.contains('fold') && e.target !== letter) {
+        envelope.classList.remove('fold');
+      }
+    });
+
+    // Zoom letter in/out
+    letter.addEventListener('click', e => {
+      e.stopPropagation();
+      if (!isZoomed) {
+        back.replaceChild(placeholder, letter);
+        document.body.appendChild(letter);
+      } else {
+        document.body.removeChild(letter);
+        back.replaceChild(letter, placeholder);
+      }
+      letter.classList.toggle('zoom');
+      isZoomed = !isZoomed;
+    });
+  </script>
+
+</body>
+</html>
