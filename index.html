@@ -19,8 +19,8 @@
 
     /* Envelope container */
     .envelope {
-      width: 270px;
-      height: 170px;
+      width: 540px;
+      height: 340px;
       position: relative;
       background-color: #fed4d6;
       cursor: pointer;
@@ -42,19 +42,19 @@
     .top, .bottom {
       width: 0; height: 0;
       position: relative;
-      border-left: 135px solid transparent;
-      border-right: 135px solid transparent;
+      border-left: 270px solid transparent;
+      border-right: 270px solid transparent;
       transition: all 0.8s ease;
       transform-origin: bottom;
     }
     .top {
-      border-bottom: 120px solid #f75555;
-      top: -120px;
+      border-bottom: 240px solid #f75555;
+      top: -240px;
       z-index: 3;
     }
     .bottom {
-      border-bottom: 120px solid #d81616;
-      top: -70px;
+      border-bottom: 240px solid #d81616;
+      top: -140px;
       z-index: 4;
     }
 
@@ -62,12 +62,12 @@
     .left, .right {
       position: absolute;
       top: 0; height: 0;
-      border-top: 85px solid transparent;
-      border-bottom: 85px solid transparent;
+      border-top: 170px solid transparent;
+      border-bottom: 170px solid transparent;
       z-index: 4;
     }
-    .left { left: 0; border-left: 135px solid #fe1919; }
-    .right { right: 0; border-right: 135px solid #fe1919; }
+    .left { left: 0; border-left: 270px solid #fe1919; }
+    .right { right: 0; border-right: 270px solid #fe1919; }
 
     /* Back panel (holds the letter) */
     .back {
@@ -90,7 +90,7 @@
       position: absolute;
       left: 50%; top: 20%;
       transform: translateX(-50%) scale(1);
-      width: 75%; height: 60%;
+      width: 85%; height: 70%;
       background-color: #fdf8e4;
       background-image: var(--paper-noise);
       background-repeat: repeat;
@@ -197,10 +197,7 @@
             Words cannot express how much joy you bring into my life every day.
             From our morning coffees to our starlit conversations,
             every moment with you is a treasure.
-             I hope this letter finds you in the brightest of spirits.
-            Words cannot express how much joy you bring into my life every day.
-            From our morning coffees to our starlit conversations,
-            every moment with you is a treasure.
+            
           </p>
           <p>
             Forever yours,<br>
